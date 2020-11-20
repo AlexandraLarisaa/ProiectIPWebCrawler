@@ -1,0 +1,1 @@
+Fisierul README, in care se vor scrie detalii despre utilizarea programului
