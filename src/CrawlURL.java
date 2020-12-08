@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.StringJoiner;
 
+
 /**
  * Clasa CrawlURL creaza structura schelet a sitemap-ului
  * pornind de la URL-urile din fisierul de intrare
@@ -22,6 +23,7 @@ public class CrawlURL {
     String inFile;
     Map<String, ArrayList<String>> robots;
     String USER_AGENT = " Mozilla";
+    CrawlLog logger = new CrawlLog();
 
     /**
      * Constructorul clasei, responsabil cu
@@ -31,7 +33,7 @@ public class CrawlURL {
      * @param inputFilename Fisier de intrare cu cate un URL pe fiecare linie
      * @param sitemapDir    Numele directorului parinte, in care se va crea structura arborescenta
      */
-    public CrawlURL(String inputFilename, String sitemapDir) {
+    public CrawlURL(String inputFilename, String sitemapDir) throws IOException {
 
         this.sitemapDir = sitemapDir; // sites
         this.inFile = inputFilename;
@@ -107,29 +109,32 @@ public class CrawlURL {
 
             try {
                 CheckRobots getRobots = new CheckRobots(currentLine);
+                logger.sendDataToLogger(1, "Trying to access robots.txt on: " + currentLine);
                 this.robots = getRobots.readRobots();
                 //System.out.println(this.robots);
                 boolean isDisallowed = false;
                 if (this.robots.containsKey(this.USER_AGENT) == true) {
                     for (int i = 0; i < splitSiteName.length; i++) {
-                        if(this.robots.containsValue(splitSiteName[i])){
+                        if (this.robots.containsValue(splitSiteName[i])) {
                             isDisallowed = true;
                             break;
                         }
                     }
                 }
-                if(isDisallowed==false){
+                if (isDisallowed == false) {
+                    logger.sendDataToLogger(1, "Downloading " + currentLine);
                     download(currentLine, directory.toString() + "/" + resourceFileName);
-                }
-                else {
-                    throw new Exception("Crawler-ul nu poate accesa resursa respectiva!");
+
+                } else {
+                    throw new Exception("Crawler could not access this resource!");
                 }
             } catch (MalformedURLException e) {
                 //de bagat in fisierul de log
                 System.out.println("Format URL gresit!");
             } catch (Exception e) {
                 //de bagat in fisierul de log
-                System.out.println(e.getMessage());
+                logger.sendDataToLogger(1, e.getMessage());
+                //System.out.println(e.getMessage());
                 //e.printStackTrace();
             }
 
@@ -137,6 +142,8 @@ public class CrawlURL {
         }
 
         readInput.close();
+        logger.close();
+
     }
 
     /**
@@ -156,7 +163,8 @@ public class CrawlURL {
         if (connection.getResponseCode() == 404) {
             //resursa respectiva nu exista
             //de logat in fisier
-            System.out.println("404");
+            logger.sendDataToLogger(2, "Resource not found at " + urlString);
+           // System.out.println("404");
         } else {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
