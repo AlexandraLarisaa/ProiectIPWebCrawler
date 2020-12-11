@@ -23,13 +23,15 @@ public class  Crawler {
             //parcurgere fisiere din sitemap
             //si afisare doar acele fisiere cu numele specificat(ex: search)
 
+
         }   else if(args[0].equals("sitemap")){
                 CrawlSitemap sitemap=new CrawlSitemap(new File("C:\\ip\\ProiectIPWebCrawler\\sites"));
                 sitemap.setFunction();
                 File s=new File("D:\\sitemapaaad.txt");
                 FileWriter mOut=new FileWriter (s);
-                mOut.write("corina e frumoas");
-
+        } else if(args[0].equals("filter")){
+            CrawlerFilter crawlerFilter = new CrawlerFilter(args[1],"sites/"+args[2]);
+            crawlerFilter.showPath();
         }
 
 
