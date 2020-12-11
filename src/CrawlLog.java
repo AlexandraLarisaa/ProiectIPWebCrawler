@@ -41,7 +41,6 @@ public class CrawlLog {
      * @param messageToLog mesajul pe baza caruia se va face
      *                     logul
      */
-
     public void sendDataToLogger(int log_id, String messageToLog) throws IOException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd '-' HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
