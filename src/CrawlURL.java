@@ -23,7 +23,7 @@ public class CrawlURL {
     String inFile;
     Map<String, ArrayList<String>> robots;
     String USER_AGENT = " Mozilla";
-    CrawlLog logger = new CrawlLog();
+//    CrawlLog logger = new CrawlLog();
 
     /**
      * Constructorul clasei, responsabil cu
@@ -109,7 +109,7 @@ public class CrawlURL {
 
             try {
                 CheckRobots getRobots = new CheckRobots(currentLine);
-                logger.sendDataToLogger(1, "Trying to access robots.txt on: " + currentLine);
+//                logger.sendDataToLogger(1, "Trying to access robots.txt on: " + currentLine);
                 this.robots = getRobots.readRobots();
                 //System.out.println(this.robots);
                 boolean isDisallowed = false;
@@ -122,7 +122,7 @@ public class CrawlURL {
                     }
                 }
                 if (isDisallowed == false) {
-                    logger.sendDataToLogger(1, "Downloading " + currentLine);
+//                    logger.sendDataToLogger(1, "Downloading " + currentLine);
                     download(currentLine, directory.toString() + "/" + resourceFileName);
 
                 } else {
@@ -133,7 +133,7 @@ public class CrawlURL {
                 System.out.println("Format URL gresit!");
             } catch (Exception e) {
                 //de bagat in fisierul de log
-                logger.sendDataToLogger(1, e.getMessage());
+//                logger.sendDataToLogger(1, e.getMessage());
                 //System.out.println(e.getMessage());
                 //e.printStackTrace();
             }
@@ -142,7 +142,7 @@ public class CrawlURL {
         }
 
         readInput.close();
-        logger.close();
+//        logger.close();
 
     }
 
@@ -163,7 +163,7 @@ public class CrawlURL {
         if (connection.getResponseCode() == 404) {
             //resursa respectiva nu exista
             //de logat in fisier
-            logger.sendDataToLogger(2, "Resource not found at " + urlString);
+//            logger.sendDataToLogger(2, "Resource not found at " + urlString);
            // System.out.println("404");
         } else {
             try {

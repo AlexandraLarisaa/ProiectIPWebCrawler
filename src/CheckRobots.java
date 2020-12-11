@@ -18,7 +18,7 @@ public class CheckRobots {
     private String robotsContent;
     private String robotsURL;
     private Map<String, ArrayList<String>> robots;
-    CrawlLog logger;
+//    CrawlLog logger;
 
     /**
      * Functia returneaza link-ul catre fisierul
@@ -85,7 +85,7 @@ public class CheckRobots {
             }
             //}
         } catch (IOException e) {
-           logger.sendDataToLogger(3,"robots.txt doesn't exists..");
+//           logger.sendDataToLogger(3,"robots.txt doesn't exists..");
             //System.out.println("Fisierul robots.txt nu exista!");
         }
         return this.robots;
