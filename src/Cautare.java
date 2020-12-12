@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 public class Cautare {
 }
 
+
+
     static void cauta(String keyword) {
 
         File dir = new File("C:\\Users\\andre\\Desktop\\cautare\\ProiectIPWebCrawler\\sites"); // directory = target directory.
@@ -34,6 +36,7 @@ public class Cautare {
 
                 }
             }
+
             System.out.print("\n\t List : " + list); // list of files containing keyword.
         } // IF directory exists then only process.
         else {
