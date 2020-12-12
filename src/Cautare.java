@@ -5,10 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cautare {
-
-    public static void main(String[] args) {
-        cauta("precum");
-    }
+}
 
     static void cauta(String keyword) {
 
