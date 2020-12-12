@@ -27,6 +27,11 @@ public class Crawler {
             CrawlerFilter crawlerFilter = new CrawlerFilter(args[1],"sites/"+args[2]);
             crawlerFilter.showPath();
         }
+       else if(args[0].equals("sitemap")){
+        CrawlSitemap sitemap=new CrawlSitemap(new File("C:\\ip\\ProiectIPWebCrawler\\sites"));
+        sitemap.setFunction();
+
+    }
 
 
     }
