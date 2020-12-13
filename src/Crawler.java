@@ -19,19 +19,9 @@ public class Crawler {
             //si afisare doar acele fisiere cu tipul specificat(ex: png)
 
         } else if(args[0].equals("search")){
-            //crawler search document
-            //parcurgere fisiere din sitemap
-            //si afisare doar acele fisiere cu numele specificat(ex: search)
-
-        } else if(args[0].equals("filter")){
-            CrawlerFilter crawlerFilter = new CrawlerFilter(args[1],"sites/"+args[2]);
-            crawlerFilter.showPath();
+            Cautare cautare=new Cautare();
+            cautare.cauta("precum");
         }
-       else if(args[0].equals("sitemap")){
-        CrawlSitemap sitemap=new CrawlSitemap(new File("C:\\ip\\ProiectIPWebCrawler\\sites"));
-        sitemap.setFunction();
-
-    }
 
 
     }
