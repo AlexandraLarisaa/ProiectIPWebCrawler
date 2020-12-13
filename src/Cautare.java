@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Cautare {
-
-}
+public class Cautare{
 
 
 
-    static void cauta(String keyword) {
+
+   public static void cauta(String keyword) {
 
         File dir = new File("C:\\Users\\andre\\Desktop\\cautare\\ProiectIPWebCrawler\\sites"); // directory = target directory.
         if (dir.exists()) // Directory exists then proceed.
