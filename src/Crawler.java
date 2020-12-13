@@ -8,10 +8,13 @@ public class Crawler {
 
         if(args[0].equals("crawl")){
             //crawler crawl config.conf;
-            config = new CrawlerConfig(args[1]);
+//            config = new CrawlerConfig(args[1]);
+//
+//            CrawlURL firstCrawl = new CrawlURL(args[2], "sites");
+//            firstCrawl.startCrawl();
 
-            CrawlURL firstCrawl = new CrawlURL(args[2], "sites");
-            firstCrawl.startCrawl();
+            var crawler = new CrawlerInDepth(3,"https://www.mta.ro");
+            crawler.startCrawl();
 
         } else if(args[0].equals("list")){
             //crawler list png
@@ -27,11 +30,6 @@ public class Crawler {
             CrawlerFilter crawlerFilter = new CrawlerFilter(args[1],"sites/"+args[2]);
             crawlerFilter.showPath();
         }
-       else if(args[0].equals("sitemap")){
-        CrawlSitemap sitemap=new CrawlSitemap(new File("C:\\ip\\ProiectIPWebCrawler\\sites"));
-        sitemap.setFunction();
-
-    }
 
 
     }
