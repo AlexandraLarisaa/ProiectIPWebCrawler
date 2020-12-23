@@ -39,11 +39,42 @@ public class CrawlerInDepth {
         in.close();
         return containedUrls;
     }
+    public static long findSize(String path) {
+        long totalSize = 0;
+        ArrayList<String> directory = new ArrayList<String>();
+        File file = new File(path);
 
+        if(file.isDirectory()) {
+            directory.add(file.getAbsolutePath());
+            while (directory.size() > 0) {
+                String folderPath = directory.get(0);
+
+                directory.remove(0);
+                File folder = new File(folderPath);
+                File[] filesInFolder = folder.listFiles();
+                int noOfFiles = filesInFolder.length;
+
+                for(int i = 0 ; i < noOfFiles ; i++) {
+                    File f = filesInFolder[i];
+                    if(f.isDirectory()) {
+                        directory.add(f.getAbsolutePath());
+                    } else {
+                        totalSize += f.length();
+                    }
+                }
+            }
+        } else {
+            totalSize = file.length();
+        }
+        return totalSize;
+    }
     public void startCrawl(){
         urlsPerLevel.get(0).add(inputURL);
         for (int i = 0; i < urlsPerLevel.size(); i++) {
             System.out.println("Processing layer "+ i + " of " + urlsPerLevel.get(i).size() + " websites");
+
+            long folderSize ;
+
             for(var url:urlsPerLevel.get(i)){
                 try{
 
@@ -52,6 +83,10 @@ public class CrawlerInDepth {
                         if(i+1 < inputLevel){
                             urlsPerLevel.get(i+1).add(crawledUrl);
                         }
+                    }
+                    folderSize = findSize("D:/Download");
+                    if(folderSize>=1073741824) {
+                                break;
                     }
                     var downloadPath = "D:/Download";
                     downloadResource(url,downloadPath);
@@ -70,18 +105,36 @@ public class CrawlerInDepth {
         }
     }
 
+
     public void downloadResource(String url,String path) throws IOException {
+
         ReadableByteChannel readableByteChannel = Channels.newChannel(new URL(url).openStream());
         var formattedUrl = url.replace('/', '_').replace(':','_');
-        formattedUrl = formattedUrl+".html";
+        String extension="";
+        if(url.length()>3){
+            extension=url.substring(url.length()-3);
+
+        }
+        if(extension.equals("png") || extension.equals("jpg")||extension.equals("pdf")||extension.equals("gif") || extension.equals("doc")) {
+
+        }else
+        {
+            formattedUrl = formattedUrl + ".html";
+        }
+
+
+
+
         formattedUrl = path+'/'+formattedUrl;
         File newFile = new File(formattedUrl);
+
         if(!newFile.exists())
         {
             System.out.println("Downloading new file "+ formattedUrl);
             newFile.createNewFile();
             try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
                  FileOutputStream fileOutputStream = new FileOutputStream(formattedUrl)) {
+
                 byte dataBuffer[] = new byte[1024];
                 int bytesRead;
                 while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
